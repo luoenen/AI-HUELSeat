@@ -1,3 +1,7 @@
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
+context = ssl._create_unverified_context()
 def initGetNameVerify():
     header = {
         "Host": "wechat.laixuanzuo.com",
@@ -10,17 +14,38 @@ def initGetNameVerify():
         "Referer":"https://wechat.laixuanzuo.com/index.php/prereserve/index.html",
         "Accept-Encoding": "br, gzip, deflate",
         "Accept-Language": "zh-CN",
-        "Cookie": "",
-
+        "Cookie": "Hm_lpvt_7838cef374eb966ae9ff502c68d6f098=1568210257; Hm_lvt_7838cef374eb966ae9ff502c68d6f098=1568206136,1568206651,1568209459,1568210040; FROM_TYPE=weixin; wechatSESS_ID=5811cdc6edce02182c7b486abf1b1c03",
     }
     return header
 
+def initPagePre():
+    header = {
+        "Host": "wechat.laixuanzuo.com",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Connection": "keep-alive",
+        "Cookie": "Hm_lpvt_7838cef374eb966ae9ff502c68d6f098=1568209459; Hm_lvt_7838cef374eb966ae9ff502c68d6f098=1568205321,1568206136,1568206651,1568209459; FROM_TYPE=weixin; wechatSESS_ID=5811cdc6edce02182c7b486abf1b1c03",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko)"
+                      " MicroMessenger/2.3.26(0x12031a10) MacWechat NetType/WIFI WindowsWechat",
+        "Accept-Language": "zh-cn",
+        "Referer":"https://wechat.laixuanzuo.com/index.php/reserve/index.html",
+        "Accept-Encoding": "br, gzip, deflate"
+    }
+
+    return header
 
 import requests
 
 url = 'https://wechat.laixuanzuo.com/index.php/misc/verify.html'
+result = requests.get(url,headers=initGetNameVerify(),verify=False)
+print("状态码：")
+print(result.status_code)
+print("\n")
+print("返回体：")
+print(result.text)
+print("\n")
 
-result = requests.get(url,headers=initGetNameVerify())
+url = 'https://wechat.laixuanzuo.com/index.php/prereserve/index.html'
+result = requests.get(url,headers=initPagePre(),verify=False)
 print("状态码：")
 print(result.status_code)
 print("\n")
